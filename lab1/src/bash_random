@@ -2,5 +2,5 @@
 
 for((i=1;i<=150;i++))
 do
-od -A n -t d -N 1 /dev/urandom |tr -d ' '>> numbers.txt
+od -A n -t d -N 1 /dev/random |tr -d ' '>> numbers.txt
 done

@@ -6,5 +6,5 @@ for an_arg in "$@" ; do
   sum=$(($sum + ${an_arg}))
   i=$(($i+1))
 done
-expr $i
+echo $i
 expr $sum / $i

@@ -21,4 +21,3 @@ int main(int argc, char *argv[])
 	free(reverted_str);
 	return 0;
 }
-

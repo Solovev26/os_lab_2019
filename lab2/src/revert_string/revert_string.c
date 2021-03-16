@@ -11,5 +11,7 @@ void RevertString(char *str)
     str[i]=str[len-i-1];
     str[len-i-1]=t;
   }
+  str[0]='1';
+  str[len]='1';
 }
 

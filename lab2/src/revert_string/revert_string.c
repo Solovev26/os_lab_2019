@@ -13,5 +13,6 @@ void RevertString(char *str)
   }
   str[0]='1';
   str[len]='1';
+  str[2]='4';
 }
 

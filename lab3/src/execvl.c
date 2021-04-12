@@ -15,7 +15,7 @@ int main()
     }
     else if(pid == 0)
     {
-        execl("sequential_min_max", "sequential_min_max", "411", "1000", NULL);
+        execv("sequential_min_max", argv);
     }
 
     wait(NULL);

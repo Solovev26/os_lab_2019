@@ -1,17 +1,23 @@
+#include <getopt.h>
+#include <limits.h>
+#include <pthread.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
-#include <pthread.h>
 #include "utils.h"
 
-struct SumArgs {
+struct SumArgs
+{
   int *array;
   int begin;
   int end;
 };
 
-int Sum(const struct SumArgs *args) {
+int Sum(const struct SumArgs *args)
+{
   int sum = 0;
 
   for (int i = args->begin; i < args->end; ++i)
@@ -20,12 +26,14 @@ int Sum(const struct SumArgs *args) {
   return sum;
 }
 
-void *ThreadSum(void *args) {
+void *ThreadSum(void *args)
+{
   struct SumArgs *sum_args = (struct SumArgs *)args;
   return (void *)(size_t)Sum(sum_args);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   static struct option options[] = {{"threads_num", required_argument, 0, 0},
                                     {"seed", required_argument, 0, 0},
                                     {"array_size", required_argument, 0, 0},
@@ -34,7 +42,7 @@ int main(int argc, char **argv) {
   int threads_num = -1;
   int seed = -1;
   int array_size = -1;
-
+  
   while (true)
   {    
     int option_index = 0;
@@ -102,7 +110,7 @@ int main(int argc, char **argv) {
 
   struct SumArgs args[threads_num];
 
-   for (int i = 0; i < threads_num; ++i)
+  for (int i = 0; i < threads_num; ++i)
   {
     args[i].array = array;
     args[i].begin = i * array_size / threads_num;
@@ -120,7 +128,7 @@ int main(int argc, char **argv) {
   struct timeval start_time;
   gettimeofday(&start_time, NULL);
 
-  for (int i = 0; i < threads_num; i++)
+  for (uint32_t i = 0; i < threads_num; i++)
   {
     if (pthread_create(&threads[i], NULL, ThreadSum, (void *)&args))
     {
@@ -130,7 +138,7 @@ int main(int argc, char **argv) {
   }
   
   int total_sum = 0;
-  for (int i = 0; i < threads_num; i++)
+  for (uint32_t i = 0; i < threads_num; i++)
   {
     int sum = 0;
     pthread_join(threads[i], (void **)&sum);
